@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useNotifications } from '../context/NotificationContext';
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { IoIosNotifications } from "react-icons/io";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -35,7 +37,7 @@ const Navbar = () => {
           className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           title="Toggle theme"
         >
-          {dark ? '☀️' : '🌙'}
+          {dark ? <MdLightMode /> : <MdDarkMode />}
         </button>
 
         {/* Notifications */}
@@ -44,7 +46,7 @@ const Navbar = () => {
             onClick={toggleNotifs}
             className="relative p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
           >
-            🔔
+            <IoIosNotifications />
             {unread > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 {unread > 9 ? '9+' : unread}
