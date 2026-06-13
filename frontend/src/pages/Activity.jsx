@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import { FaBook, FaLock, FaUser } from "react-icons/fa";
 
-const entityIcon = { project: '📁', user: '👤', auth: '🔐' };
+const entityIcon = { project: <FaBook />, user: <FaUser />, auth: <FaLock /> };
 
 const Activity = () => {
   const [activities, setActivities] = useState([]);
@@ -65,11 +66,10 @@ const Activity = () => {
                   by <span className="font-medium">{a.user?.name}</span> · {new Date(a.createdAt).toLocaleString()}
                 </p>
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs capitalize font-medium ${
-                a.entity === 'project' ? 'bg-blue-100 text-blue-700' :
+              <span className={`px-2 py-1 rounded-full text-xs capitalize font-medium ${a.entity === 'project' ? 'bg-blue-100 text-blue-700' :
                 a.entity === 'user' ? 'bg-purple-100 text-purple-700' :
-                'bg-gray-100 text-gray-700'
-              }`}>
+                  'bg-gray-100 text-gray-700'
+                }`}>
                 {a.entity}
               </span>
             </div>

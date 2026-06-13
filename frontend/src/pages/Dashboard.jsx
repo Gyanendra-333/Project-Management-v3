@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import api from '../services/api';
 import toast from 'react-hot-toast';
+import { FaBook, FaClock, FaUser } from "react-icons/fa";
 
 const COLORS = ['#6366f1', '#f59e0b', '#10b981'];
 
@@ -44,9 +45,9 @@ const Dashboard = () => {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCard title="Total Users" value={data?.totalUsers || 0} icon="👥" color="border-indigo-500" />
-        <StatCard title="Total Projects" value={data?.totalProjects || 0} icon="📁" color="border-yellow-500" />
-        <StatCard title="Ending Soon" value={data?.endingSoon?.length || 0} icon="⏰" color="border-red-500" />
+        <StatCard title="Total Users" value={data?.totalUsers || 0} icon={<FaUser />} color="border-indigo-500" />
+        <StatCard title="Total Projects" value={data?.totalProjects || 0} icon={<FaBook />} color="border-yellow-500" />
+        <StatCard title="Ending Soon" value={data?.endingSoon?.length || 0} icon={<FaClock />} color="border-red-500" />
       </div>
 
       {/* Charts */}
