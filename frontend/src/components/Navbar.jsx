@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useNotifications } from '../context/NotificationContext';
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode, MdMenu } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 
-const Navbar = () => {
+const Navbar = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
   const { dark, toggleTheme } = useTheme();
   const { notifications, unread, markAllRead, clearNotifications } = useNotifications();
@@ -25,12 +25,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-md px-6 py-3 flex items-center justify-between sticky top-0 z-50">
-      <Link to="/" className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
-        ProjectHub
-      </Link>
+    <nav className="bg-white dark:bg-gray-800 shadow-md px-4 md:px-6 py-3 flex items-center justify-between sticky top-0 z-50">
+      <div className="flex items-center gap-3">
+        {/* Hamburger - only mobile */}
+        <button
+          onClick={onMenuClick}
+          className="md:hidden p-2 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+        >
+          <MdMenu size={20} />
+        </button>
 
-      <div className="flex items-center gap-4">
+        <Link to="/" className="text-xl font-bold text-indigo-600 dark:text-indigo-400">
+          ProjectHub
+        </Link>
+      </div>
+
+      <div className="flex items-center gap-2 md:gap-4">
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
@@ -55,13 +65,10 @@ const Navbar = () => {
           </button>
 
           {showNotifs && (
-            <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-xl shadow-xl overflow-hidden z-50">
+            <div className="absolute right-0 mt-2 w-72 md:w-80 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-xl shadow-xl overflow-hidden z-50">
               <div className="flex items-center justify-between px-4 py-3 border-b dark:border-gray-700">
                 <h3 className="font-semibold text-sm">Notifications</h3>
-                <button
-                  onClick={clearNotifications}
-                  className="text-xs text-red-500 hover:text-red-700"
-                >
+                <button onClick={clearNotifications} className="text-xs text-red-500 hover:text-red-700">
                   Clear all
                 </button>
               </div>
@@ -70,14 +77,9 @@ const Navbar = () => {
                   <p className="text-center text-sm text-gray-500 py-6">No notifications</p>
                 ) : (
                   notifications.map((n, i) => (
-                    <div
-                      key={i}
-                      className="px-4 py-3 border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-                    >
+                    <div key={i} className="px-4 py-3 border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                       <p className="text-sm">{n.message}</p>
-                      <p className="text-xs text-gray-400 mt-1">
-                        {new Date(n.timestamp).toLocaleTimeString()}
-                      </p>
+                      <p className="text-xs text-gray-400 mt-1">{new Date(n.timestamp).toLocaleTimeString()}</p>
                     </div>
                   ))
                 )}
@@ -93,7 +95,7 @@ const Navbar = () => {
             className="flex items-center gap-2 bg-indigo-50 dark:bg-indigo-900 px-3 py-2 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-800 transition"
           >
             <span className="text-sm font-medium">{user?.name?.split(' ')[0]}</span>
-            <span className="text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full capitalize">
+            <span className="hidden sm:inline text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full capitalize">
               {user?.role}
             </span>
           </button>
